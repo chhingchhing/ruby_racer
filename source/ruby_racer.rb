@@ -4,6 +4,8 @@ class RubyRacer
   attr_reader :players, :length
 
   def initialize(players, length = 30)
+    origin = Array.new(players.length, 0)
+    @players = Hash[ players.zip(origin) ]
   end
 
   # Returns +true+ if one of the players has reached
@@ -30,6 +32,8 @@ end
 players = ['a', 'b']
 
 game = RubyRacer.new(players)
+
+exit!
 
 # This clears the screen, so the fun can begin
 clear_screen!
