@@ -17,11 +17,7 @@ class RubyRacer
   def winner
     winners = []
     players.each { |player, position| winners << player if position == length }
-    if winners.length == 1
-      winners.pop
-    else
-      nil
-    end
+    winners
   end
 
   def advance_player!(player)
@@ -58,5 +54,5 @@ end
 
 move_to_home!
 game.print_board
-the_winner = game.winner
+the_winner = game.winner.join(" & ")
 puts "#{the_winner ||= 'Nobody'} won!"
