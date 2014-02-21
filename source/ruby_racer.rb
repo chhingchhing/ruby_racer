@@ -7,7 +7,7 @@ class RubyRacer
     origin = Array.new(players.length, 0)
     @players = Hash[ players.zip(origin) ]
     @length = length
-    @die = Die.new
+    @die = Die.new(4)
   end
 
   def finished?
@@ -26,17 +26,49 @@ class RubyRacer
   end
 
   def print_board
-    puts "=" * length + "==="
+    puts
+    puts
+    title = "   T H E   G R E A T   S P E R M   R A C E   "
+    offset = title.length / 2
+    puts "=" * (length/2 - offset) + "   T H E   G R E A T   S P E R M   R A C E   " + "=" * (length/2 - offset)
     players.each do |player, position|
+      avatar = "~~#{player[0]}"
+      if position == length
+        racer = " "
+        finish = " #{avatar} <-- CONCEPTION!!!"
+      else
+        racer = avatar
+        finish = "* E G G"
+      end
       print "\#" + " " * position
-      print "" + player[0]
-      puts  " " * (length - position) + "*"
+      print "" + racer
+      puts  " " * (length - position) + finish
     end
-    puts "=" * length + "==="
+    puts "=" * length + "====="
   end
 end
 
-players = ['Tony', 'John', 'Kelsey', 'Dan', 'Better Dan']
+players = ['Adam',
+           'Andrew',
+           'Ashlee',
+           'Calder',
+           'Cameron',
+           'Dan',
+           'Better Dan',
+           'Devin',
+           'Dinesh',
+           'Greg',
+           'Ian',
+           'Jarrod',
+           'John',
+           'Kelsey',
+           'Kenny',
+           'Marco',
+           'Michael',
+           'Osagie',
+           'Pablo',
+           'Sarah',
+           'Tony']
 
 game = RubyRacer.new(players, 200)
 
@@ -44,15 +76,17 @@ clear_screen!
 
 until game.finished?
   players.each do |player|
-    move_to_home!
-
-    game.print_board
     game.advance_player!(player)
-    sleep(0.01)
   end
+  move_to_home!
+  game.print_board
+  sleep(0.1)
 end
 
 move_to_home!
 game.print_board
 the_winner = game.winner.join(" & ")
-puts "#{the_winner ||= 'Nobody'} won!"
+puts
+puts "***   congratulations!!! #{the_winner} will have babies!   ***".upcase.center(207)
+puts
+puts
