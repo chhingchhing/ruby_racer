@@ -26,26 +26,35 @@ class RubyRacer
   end
 
   def print_board
-    puts
-    puts
-    title = "   T H E   G R E A T   S P E R M   R A C E   "
-    offset = title.length / 2
-    puts "=" * (length/2 - offset) + "   T H E   G R E A T   S P E R M   R A C E   " + "=" * (length/2 - offset)
+    puts "\n\n"
+    print_title("   T H E   G R E A T   S P E R M   R A C E   ")
     players.each do |player, position|
-      avatar = "~~#{player[0]}"
-      if position == length
-        racer = " "
-        finish = " #{avatar} <-- CONCEPTION!!!"
-      else
-        racer = avatar
-        finish = "* E G G"
-      end
-      print "\#" + " " * position
-      print "" + racer
-      puts  " " * (length - position) + finish
+      print_lane(player, position)
     end
-    puts "=" * length + "====="
+    print_bottom
   end
+
+  private
+
+  def print_title(title)
+    puts title.center(length, '=')
+  end
+
+  def print_bottom
+    puts "=" * length
+  end
+
+  def print_lane(name, pos)
+    avatar = "~~#{name[0]}"
+    start = "\#"
+    to_go = "   [".rjust(length - pos)
+    lane = ""
+    # lane << start
+    lane << avatar.rjust(pos)[-pos..-1]
+    lane << to_go
+    puts lane
+  end
+
 end
 
 players = ['Adam',
@@ -68,7 +77,7 @@ players = ['Adam',
            'Osagie',
            'Pablo',
            'Sarah',
-           'Tony']
+           'Tony']#.shuffle
 
 game = RubyRacer.new(players, 200)
 
@@ -87,6 +96,6 @@ move_to_home!
 game.print_board
 the_winner = game.winner.join(" & ")
 puts
-puts "***   congratulations!!! #{the_winner} will have babies!   ***".upcase.center(207)
+puts "* * *   congratulations!!! #{the_winner} will have babies!   * * *".upcase.center(207)
 puts
 puts
